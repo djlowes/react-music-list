@@ -8,6 +8,10 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session')({ secret: 'I have no secrets', resave: false, saveUninitialized: false });
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const User = require('./models/user');
 
 // Routes
@@ -35,9 +39,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+// Webpack Server
+const webpackCompiler = webpack(webpackConfig);
+app.use(webpackDevMiddleware(webpackCompiler, {
+  publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true,
+    chunks: true,
+    'errors-only': true,
+  },
+}));
+app.use(webpackHotMiddleware(webpackCompiler, {
+  log: console.log,
+}));
+
 app.use('/api', api);
 app.use('/api/users', users);
+app.use('/*', index);
 
 // Configure passport
 

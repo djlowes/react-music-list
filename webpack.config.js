@@ -1,12 +1,18 @@
-const path = require('path');
+const { resolve } = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: {
-    'javascripts/build.js': './src/index.jsx',
-  },
+  context: resolve(__dirname, 'src'),
+  entry: [
+    'react-hot-loader/patch',
+    'react-hot-loader/babel',
+    'webpack-hot-middleware/client',
+    './index.jsx',
+  ],
   output: {
-    filename: '[name]',
-    path: path.join(__dirname, 'public'),
+    filename: 'build.js',
+    path: '/',
+    publicPath: '/javascripts',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -20,4 +26,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 };
