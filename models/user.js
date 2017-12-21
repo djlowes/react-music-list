@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+// Lint told me to do it this way!
+const { Schema } = mongoose.Schema;
+
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const User = new Schema({
   username: String,
-  password: {type: String, select: false},
+  password: { type: String, select: false },
   firstName: String,
-  lastName: String
+  lastName: String,
 });
 
 User.plugin(passportLocalMongoose);
