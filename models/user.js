@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-// Lint told me to do it this way!
-const { Schema } = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const passportLocalMongoose = require('passport-local-mongoose');
 
