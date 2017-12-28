@@ -1,11 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { logger } from 'redux-logger';
 
+import AuthenticationReducer from '../reducers/authentication';
 import DevTools from '../components/shared/DevTools';
 import ProgressReducer from '../reducers/progress';
 
 const combinedReducers = combineReducers({
   progress: ProgressReducer,
+  authentication: AuthenticationReducer,
 });
 
 const enhancer = compose(
@@ -22,6 +24,5 @@ export default function configureStore(initialState) {
       store.replaceReducer(ProgressReducer),
     );
   }
-
   return store;
 }
