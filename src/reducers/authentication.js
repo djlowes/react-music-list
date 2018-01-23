@@ -34,12 +34,16 @@ export default function reducer(state = initialState, action) {
     }
     case 'AUTHENTICATION_LOGOUT_FAILURE':
     case 'AUTHENTICATION_REGISTRATION_FAILURE': {
-      // todo: handle error!
       return state;
     }
     case 'AUTHENTICATION_REGISTRATION_SUCCESS': {
       const newState = Object.assign({}, state);
       newState.registrationSucceeded = true;
+      return newState;
+    }
+    case 'AUTHENTICATION_REGISTRATION_SUCCESS_VIEWED': {
+      const newState = Object.assign({}, state);
+      newState.registrationSucceeded = false;
       return newState;
     }
     default: {
